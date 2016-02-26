@@ -34,8 +34,9 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId())
         {
             case R.id.creer :
-                Intent intent = new Intent(this,ServerActivity.class);
+                Intent intent = new Intent(this,Server_Activity.class);
                 startActivity(intent);
+
                 break;
             case R.id.rejoindre:
                 startActivity(new Intent(this,ClientActivity.class));

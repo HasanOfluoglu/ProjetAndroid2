@@ -12,7 +12,7 @@ import android.os.Bundle;
  * Created by hasan on 26/02/16.
  */
 public class ClientActivity extends Activity{
-    BluetoothDevice device;
+    public BluetoothDevice device;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

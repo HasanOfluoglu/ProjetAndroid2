@@ -1,15 +1,18 @@
 package com.example.hasan.projetandroid;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-/**
- * Created by hasan on 26/02/16.
- */
-public class ServerActivity extends Activity{
+public class Server_Activity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_server_);
+
+
+
+
 
         AcceptThread accept = new AcceptThread();
         accept.run();

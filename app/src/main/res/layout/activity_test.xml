@@ -7,15 +7,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.hasan.projetandroid.Server_Activity">
+    tools:context="com.example.hasan.projetandroid.Test">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CREATION DU SERVEUR BLUETOOTH"
-        android:id="@+id/textView2"
+        android:text="SERVEUR CREER"
+        android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="76dp"
-        android:textSize="30dp" />
+        android:layout_marginTop="150dp" />
 </RelativeLayout>

@@ -3,8 +3,14 @@ package com.example.hasan.projetandroid;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -13,7 +19,7 @@ import java.util.UUID;
 public class ConnectThread extends Thread {
     private final BluetoothSocket mmSocket;
     private final BluetoothDevice mmDevice;
-    private final static UUID MY_UUID= new UUID(0,1000000) ;
+    private final static UUID MY_UUID= new UUID(1,1) ;
 
     public ConnectThread(BluetoothDevice device) {
         // Use a temporary object that is later assigned to mmSocket,
@@ -24,6 +30,7 @@ public class ConnectThread extends Thread {
         // Get a BluetoothSocket to connect with the given BluetoothDevice
         try {
             // MY_UUID is the app's UUID string, also used by the server code
+
             tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
         } catch (IOException e) { }
         mmSocket = tmp;
@@ -31,7 +38,8 @@ public class ConnectThread extends Thread {
 
     public void run() {
         BluetoothAdapter myBluetooth = BluetoothAdapter.getDefaultAdapter();
-        // Cancel discovery because it will slow down the connection
+
+
         myBluetooth.cancelDiscovery();
 
         try {

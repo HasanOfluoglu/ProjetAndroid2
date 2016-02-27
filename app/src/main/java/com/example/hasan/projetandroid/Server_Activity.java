@@ -1,5 +1,6 @@
 package com.example.hasan.projetandroid;
 
+import android.bluetooth.BluetoothAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -11,10 +12,10 @@ public class Server_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_server_);
 
 
-
-
-
-        AcceptThread accept = new AcceptThread();
+        BluetoothAdapter myBluetooth = BluetoothAdapter.getDefaultAdapter();
+        AcceptThread accept = new AcceptThread(myBluetooth);
         accept.run();
+
+
     }
 }

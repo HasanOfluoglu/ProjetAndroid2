@@ -3,6 +3,7 @@ package com.example.hasan.projetandroid;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -14,60 +15,55 @@ import java.util.UUID;
 
 
 public class AcceptThread extends Thread {
-    private final BluetoothServerSocket mmServerSocket;
-    private final static String NAME = "SERVER";
-    private final static UUID MY_UUID= new UUID(0,1000000000);
-    public AcceptThread() {
-        // Use a temporary object that is later assigned to mmServerSocket,
-        // because mmServerSocket is final
-        BluetoothServerSocket tmp = null;
-        try {
-            // MY_UUID is the app's UUID string, also used by the client code
-            BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-            tmp = mBluetoothAdapter.listenUsingRfcommWithServiceRecord(NAME, MY_UUID);
-            //TODO tmp = mBluetoothAdapter.listenUsingInsecureRfcommWithServiceRecord("meetphone", uuid);
-        } catch (IOException e) {
-
-        }
-        mmServerSocket = tmp;
-    }
-
-    public void run() {
-        BluetoothSocket socket = null;
-        // Keep listening until exception occurs or a socket is returned
-        while(true){
+        private final BluetoothServerSocket blueServerSocket;
+    private final static UUID MY_UUID= new UUID(1,1) ;
+    private final static String NOM = "SERVER";
+        public AcceptThread(BluetoothAdapter bluetoothAdapter) {
+            // On utilise un objet temporaire qui sera assigné plus tard à blueServerSocket car blueServerSocket est "final"
+            BluetoothServerSocket tmp = null;
             try {
-                socket = mmServerSocket.accept();
-            } catch (IOException e) {
+                // MON_UUID est l'UUID (comprenez identifiant serveur) de l'application. Cette valeur est nécessaire côté client également !
+                tmp = bluetoothAdapter.listenUsingRfcommWithServiceRecord(NOM, MY_UUID);
+            } catch (IOException e) { }
+            blueServerSocket = tmp;
+        }
 
+        public void run() {
+            BluetoothSocket blueSocket = null;
+            // On attend une erreur ou une connexion entrante
+            while (true) {
+                System.out.println("ATTEND CONNEXION 1");
                 try {
-                    socket.close();
-                } catch (IOException closeException) { }
-            }
-            // If a connection was accepted
-            if (socket != null) {
-                //Do work to manage the connection (in a separate thread)
-                //manageConnectedSocket(socket);
-                try {
-
-                    mmServerSocket.close();
+                    System.out.println("ATTEND CONNEXION 2");
+                    blueSocket = blueServerSocket.accept();
                 } catch (IOException e) {
-                    try {
-                        socket.close();
-                    } catch (IOException closeException) { }
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    System.out.println("ATTEND CONNEXION CATCH");
+                    break;
+                }
+                System.out.println("ATTEND CONNEXION 3");
+                // Si une connexion est acceptée
+                if (blueSocket != null) {
+                    System.out.println("CONNEXION ACCEPTER");
+                    // On fait ce qu'on veut de la connexion (dans un thread séparé), à vous de la créer
+
+                    manageConnectedSocket(blueSocket);
+                    cancel();
+                    break;
                 }
             }
         }
+
+    private void manageConnectedSocket(BluetoothSocket blueSocket) {
+            System.out.println(blueSocket.isConnected());
     }
 
-    /** Will cancel the listening socket, and cause the thread to finish */
-    public void cancel() {
-        try {
-            mmServerSocket.close();
-        } catch (IOException e) { }
+    // On stoppe l'écoute des connexions et on tue le thread
+        public void cancel() {
+            try {
+                blueServerSocket.close();
+            } catch (IOException e) { }
+        }
     }
-}
+
 
 
